@@ -205,6 +205,10 @@ header{align-items:center}
 <input type="file" id="imageFile" accept="image/*" multiple>
 
 <button id="publishBtn" onclick="addPost()">نشر التحديث</button>
+<div id="uploadStatus" style="display:none;margin-top:12px">
+  <p id="uploadText">جاري رفع الصور... 0%</p>
+  <progress id="uploadBar" value="0" max="100" style="width:100%;height:12px"></progress>
+</div>
 </div>
 
 <div class="panel">
@@ -222,6 +226,7 @@ header{align-items:center}
 <footer>تحديد للاختبارات © 2026</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://rnyaqlnnrqlktcfmyyyh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_i60DzS7Lp1OvB9RIWj1C2A_9YCgDM3w';
@@ -230,6 +235,48 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+let uploadProgress = 0;
+
+async function uploadImageWithProgress(file, fileName, onProgress){
+  const { data: sessionData, error: sessionError } =
+    await supabaseClient.auth.getSession();
+
+  if(sessionError) throw sessionError;
+
+  const token = sessionData.session?.access_token;
+
+  if(!token) throw new Error('يجب تسجيل دخول المشرف');
+
+  return new Promise((resolve, reject) => {
+    const upload = new tus.Upload(file, {
+      endpoint: SUPABASE_URL + '/storage/v1/upload/resumable',
+      retryDelays: [0, 1000, 3000, 5000],
+      chunkSize: 6 * 1024 * 1024,
+      headers: {
+        authorization: 'Bearer ' + token,
+        apikey: SUPABASE_KEY,
+        'x-upsert': 'false'
+      },
+      metadata: {
+        bucketName: 'post-images',
+        objectName: fileName,
+        contentType: file.type || 'application/octet-stream',
+        cacheControl: '3600'
+      },
+      onError(error){
+        reject(error);
+      },
+      onProgress(bytesUploaded, bytesTotal){
+        onProgress(Math.round(bytesUploaded / bytesTotal * 100));
+      },
+      onSuccess(){
+        resolve();
+      }
+    });
+
+    upload.start();
+  });
+}
 
 const homePage = document.getElementById('homePage');
 const loginPage = document.getElementById('loginPage');
@@ -349,26 +396,54 @@ async function addPost(){
 
   const imageUrls = [];
 
-  for(const file of files){
-    const fileName = Date.now() + '-' +
-      Math.random().toString(36).slice(2) + '-' +
-      file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+  
+const uploadStatus = document.getElementById('uploadStatus');
+const uploadBar = document.getElementById('uploadBar');
+const uploadText = document.getElementById('uploadText');
 
-    const { error: uploadError } = await supabaseClient.storage
-      .from('post-images')
-      .upload(fileName, file);
+const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+let uploadedBefore = 0;
 
-    if(uploadError){
-      alert('تعذر رفع الصورة: ' + uploadError.message);
-      return;
-    }
+if(files.length){
+  uploadStatus.style.display = 'block';
+  uploadBar.value = 0;
+  uploadText.textContent = 'جاري رفع الصور... 0%';
+}
 
-    const { data: imageData } = supabaseClient.storage
-      .from('post-images')
-      .getPublicUrl(fileName);
+for(const file of files){
+  const fileName = Date.now() + '-' +
+    Math.random().toString(36).slice(2) + '-' +
+    file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
 
-    imageUrls.push(imageData.publicUrl);
-  }
+  await uploadImageWithProgress(file, fileName, percent => {
+    const currentBytes = uploadedBefore +
+      (file.size * percent / 100);
+
+    const totalPercent = totalBytes
+      ? Math.round(currentBytes / totalBytes * 100)
+      : 100;
+
+    uploadBar.value = totalPercent;
+    uploadText.textContent =
+      'جاري رفع الصور... ' + totalPercent + '%';
+  });
+
+  uploadedBefore += file.size;
+
+  const { data: imageData } = supabaseClient.storage
+    .from('post-images')
+    .getPublicUrl(fileName);
+
+  imageUrls.push(imageData.publicUrl);
+}
+
+if(files.length){
+  uploadBar.value = 100;
+  uploadText.textContent = 'اكتمل رفع الصور 100%';
+}
+
+
+  
 
   const { error } = await supabaseClient
     .from('updates')
