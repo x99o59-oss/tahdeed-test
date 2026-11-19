@@ -59,14 +59,26 @@ header{align-items:center}
 <button onclick="document.getElementById('updates').scrollIntoView({behavior:'smooth'})">اكتشف التحديثات</button>
 </section>
 
+
 <h2>المواد الدراسية</h2>
 <div class="subjects">
-  <div class="subject"><div class="emoji">⚡</div><h3>فيزياء</h3></div>
-  <div class="subject"><div class="emoji">🧪</div><h3>كيمياء</h3></div>
-  <div class="subject"><div class="emoji">🧬</div><h3>أحياء</h3></div>
-  <div class="subject"><div class="emoji">📐</div><h3>رياضيات</h3></div>
-  <div class="subject"><div class="emoji">🇬🇧</div><h3>إنجليزي</h3></div>
+  <div class="subject" onclick="showSubject('فيزياء')">
+    <div class="emoji">⚡</div><h3>فيزياء</h3>
+  </div>
+  <div class="subject" onclick="showSubject('كيمياء')">
+    <div class="emoji">🧪</div><h3>كيمياء</h3>
+  </div>
+  <div class="subject" onclick="showSubject('أحياء')">
+    <div class="emoji">🧬</div><h3>أحياء</h3>
+  </div>
+  <div class="subject" onclick="showSubject('رياضيات')">
+    <div class="emoji">📐</div><h3>رياضيات</h3>
+  </div>
+  <div class="subject" onclick="showSubject('إنجليزي')">
+    <div class="emoji">🇬🇧</div><h3>إنجليزي</h3>
+  </div>
 </div>
+
 
 <h2>أحدث التحديثات</h2>
 <div id="updates" class="grid"></div>
