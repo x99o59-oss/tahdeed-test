@@ -140,7 +140,7 @@ const supabaseClient = window.supabase.createClient(
 let posts=JSON.parse(localStorage.getItem('posts')||'[]');
 
 
-function home(document.querySelector('.hero').classList.remove('hidden');){
+function home(){document.querySelector('.hero').classList.remove('hidden');
   homePage.classList.remove('hidden');
   loginPage.classList.add('hidden');
   adminPage.classList.add('hidden');
