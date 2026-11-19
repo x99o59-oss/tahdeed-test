@@ -204,8 +204,7 @@ header{align-items:center}
 
 <input type="file" id="imageFile" accept="image/*" multiple>
 
-<button onclick="addPost()">نشر التحديث</button>
-
+<button id="publishBtn" onclick="addPost()">نشر التحديث</button>
 </div>
 
 <div class="panel">
@@ -328,6 +327,14 @@ async function logout(){
 
 
 async function addPost(){
+  const publishBtn = document.getElementById('publishBtn');
+
+  if(publishBtn.disabled) return;
+
+  publishBtn.disabled = true;
+  publishBtn.textContent = 'جاري النشر...';
+
+  try {
   const titleValue = document.getElementById('title').value.trim();
   const detailsValue = document.getElementById('details').value.trim();
   const categoryValue = document.getElementById('category').value;
@@ -386,6 +393,14 @@ async function addPost(){
   await renderManage();
 
   alert('تم نشر المنشور بنجاح');
+
+  } catch(err) {
+    console.error(err);
+    alert('حدث خطأ أثناء النشر: ' + err.message);
+  } finally {
+    publishBtn.disabled = false;
+    publishBtn.textContent = 'نشر التحديث';
+  }
 }
 
 
