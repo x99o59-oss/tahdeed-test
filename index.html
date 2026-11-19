@@ -89,12 +89,15 @@ header{align-items:center}
 <h3>إضافة تحديث</h3>
 <input id="title" placeholder="عنوان التحديث">
 <select id="category">
-<option>الاختبارات</option>
-<option>المواعيد</option>
-<option>المناهج</option>
-<option>منصة مدرستي</option>
+<option>فيزياء</option>
+<option>كيمياء</option>
+<option>أحياء</option>
+<option>رياضيات</option>
+<option>إنجليزي</option>
+<option>عام</option>
 </select>
 <textarea id="details" placeholder="تفاصيل التحديث"></textarea>
+<input id="imageFile" type="file" accept="image/*">
 <button onclick="addPost()">نشر التحديث</button>
 </div>
 <div class="panel">
@@ -154,13 +157,36 @@ async function addPost(){
     return alert('أكمل البيانات');
   }
 
+  let imageUrl = null;
+  const file = document.getElementById('imageFile').files[0];
+
+  if(file){
+    const fileName = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from('post-images')
+      .upload(fileName, file);
+
+    if(uploadError){
+      alert('تعذر رفع الصورة: ' + uploadError.message);
+      return;
+    }
+
+    const { data: imageData } = supabaseClient.storage
+      .from('post-images')
+      .getPublicUrl(fileName);
+
+    imageUrl = imageData.publicUrl;
+  }
+
   const { error } = await supabaseClient
     .from('updates')
     .insert({
       title: title.value.trim(),
       content: details.value.trim(),
       category: category.value,
-      published: true
+      published: true,
+      image_url: imageUrl
     });
 
   if(error){
@@ -170,9 +196,10 @@ async function addPost(){
 
   title.value = '';
   details.value = '';
+  document.getElementById('imageFile').value = '';
 
   await render();
-  alert('تمت إضافة التحديث بنجاح');
+  alert('تم نشر المنشور بنجاح');
 }
 
 async function removePost(id){
@@ -193,6 +220,7 @@ function save(){
 localStorage.setItem('posts',JSON.stringify(posts));
 }
 
+
 async function render(){
   const { data, error } = await supabaseClient
     .from('updates')
@@ -211,7 +239,8 @@ async function render(){
     title: p.title,
     category: p.category,
     details: p.content,
-    date: new Date(p.created_at).toLocaleDateString('ar-SA')
+    date: new Date(p.created_at).toLocaleDateString('ar-SA'),
+    image_url: p.image_url
   }));
 
   updates.innerHTML = posts.map(p => `
@@ -219,10 +248,12 @@ async function render(){
       <span class="tag">${escapeText(p.category)}</span>
       <h3>${escapeText(p.title)}</h3>
       <p>${escapeText(p.details)}</p>
+      ${p.image_url ? `<img src="${escapeText(p.image_url)}" alt="صورة المنشور" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;margin-top:10px">` : ''}
       <div class="date">${p.date}</div>
     </div>
   `).join('') || '<p>لا توجد تحديثات حالياً</p>';
 }
+
 
 function escapeText(s){
 return String(s).replace(/[&<>"']/g,c=>({
