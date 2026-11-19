@@ -204,7 +204,7 @@ async function login(){
   if(error){
     alert('خطأ في تسجيل الدخول: ' + error.message);
     return;
-  }async function renderManage(){
+async function renderManage(){
   const manage = document.getElementById('manage');
 
   const { data, error } = await supabaseClient
@@ -214,6 +214,7 @@ async function login(){
 
   if(error){
     manage.innerHTML = '<p>تعذر تحميل المنشورات</p>';
+    console.error(error);
     return;
   }
 
@@ -221,8 +222,13 @@ async function login(){
     <div class="card">
       <h3>${escapeText(p.title)}</h3>
       <p>${escapeText(p.category)}</p>
-      <button class="danger" onclick="deletePost('${p.id}')">
+
+      <button onclick="deletePost('${p.id}')">
         حذف المنشور
+      </button>
+
+      <button class="secondary" onclick="editPost('${p.id}')">
+        تعديل المنشور
       </button>
     </div>
   `).join('') || '<p>لا توجد منشورات</p>';
