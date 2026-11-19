@@ -214,7 +214,24 @@ async function login(){
 async function addPost(){
   if(!title.value.trim() || !details.value.trim()){
     return alert('أكمل البيانات');
+  }async function deletePost(id){
+  const confirmDelete = confirm('هل أنت متأكد من حذف هذا المنشور؟');
+
+  if(!confirmDelete) return;
+
+  const { error } = await supabaseClient
+    .from('updates')
+    .delete()
+    .eq('id', id);
+
+  if(error){
+    alert('تعذر حذف المنشور: ' + error.message);
+    return;
   }
+
+  alert('تم حذف المنشور بنجاح');
+  await render();
+}
 
   let imageUrl = null;
   const file = document.getElementById('imageFile').files[0];
