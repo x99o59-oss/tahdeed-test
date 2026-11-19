@@ -1,155 +1,269 @@
+
+
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>تحديد للاختبارات</title>
+
 <style>
+
 *{box-sizing:border-box}
+
 body{margin:0;font-family:Tahoma,Arial;background:#f4f6fa;color:#17233b}
+
 header{background:#101c35;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+
 .logo{font-size:25px;font-weight:bold;color:#d5ae62}
-button{border:0;padding:12px 18px;border-radius:9px;background:#d5ae62;color:#101c35;font-weight:bold;cursor:pointer}
+
+button{border:0;padding:12px 18px;border-radius:9px;background:#d5ae62;color:#101c35;font-weight:bold;cursor:pointer;margin:3px}
+
 .secondary{background:#263957;color:white}
+
+.danger{background:#b83232;color:white}
+
 main{max-width:1100px;margin:35px auto;padding:15px}
+
 .hero{background:linear-gradient(120deg,#101c35,#30496d);color:white;padding:45px;border-radius:22px}
+
 .hero h1{font-size:38px;line-height:1.5}
+
 .hero p{line-height:2;color:#ddd}
+
 h2{margin-top:35px}
+
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+
 .subjects{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
-.subject{background:white;border:1px solid #e4e8ef;border-radius:16px;padding:25px 10px;text-align:center;box-shadow:0 4px 14px #17233b0b;transition:.2s}
+
+.subject{background:white;border:1px solid #e4e8ef;border-radius:16px;padding:25px 10px;text-align:center;cursor:pointer;transition:.2s}
+
 .subject:hover{transform:translateY(-5px);border-color:#d5ae62}
+
 .subject .emoji{font-size:32px;margin-bottom:12px}
+
 .subject h3{margin:0;color:#17233b;font-size:17px}
+
 .card,.panel{background:white;padding:22px;border-radius:15px;border:1px solid #e4e8ef}
+
 .card h3{color:#17233b}
+
 .card p{line-height:2;color:#65718a}
+
 .tag{color:#99752e;font-size:13px}
+
 .date{color:#999;font-size:12px}
+
 .hidden{display:none!important}
+
 input,textarea,select{width:100%;padding:13px;margin:8px 0 15px;border:1px solid #ddd;border-radius:8px;font:inherit}
+
 textarea{height:110px}
+
 .admin{max-width:1000px;margin:30px auto;padding:15px}
+
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.post{padding:15px;border-bottom:1px solid #ddd}
+
+.manage-card{margin-bottom:12px}
+
+.manage-card button{width:100%;margin-top:7px}
+
 footer{text-align:center;padding:30px;color:#777}
+
 @media(max-width:700px){
+
 .grid,.admin-grid{grid-template-columns:1fr}
+
 .subjects{grid-template-columns:repeat(2,1fr)}
+
 .hero h1{font-size:27px}
+
 header{align-items:center}
+
 }
+
 </style>
+
 </head>
+
 <body>
 
-
 <header>
-  <div class="logo">تحديد للاختبارات</div>
-  <div>
-    <button class="secondary" onclick="home()">الرئيسية</button>
-    <button onclick="showLogin()">دخول المشرفين</button>
-  </div>
+
+<div class="logo">تحديد للاختبارات</div>
+
+<div>
+
+<button class="secondary" onclick="home()">الرئيسية</button>
+
+<button onclick="showLogin()">دخول المشرفين</button>
+
+</div>
+
 </header>
 
-
 <main id="homePage">
-<section class="hero">
-<h1>كل جديد في عالم الاختبارات بمكان واحد</h1>
-<p>منصة تحديد للاختبارات لمتابعة الإعلانات والمواعيد والتحديثات التعليمية.</p>
-<button onclick="document.getElementById('updates').scrollIntoView({behavior:'smooth'})">اكتشف التحديثات</button>
-</section>
 
+<section class="hero">
+
+<h1>كل جديد في عالم الاختبارات بمكان واحد</h1>
+
+<p>منصة تحديد للاختبارات لمتابعة الإعلانات والمواعيد والتحديثات التعليمية.</p>
+
+<button onclick="document.getElementById('updates').scrollIntoView({behavior:'smooth'})">اكتشف التحديثات</button>
+
+</section>
 
 <h2>المواد الدراسية</h2>
-<div class="subjects">
-  <div class="subject" onclick="showSubject('فيزياء')">
-    <div class="emoji">⚡</div><h3>فيزياء</h3>
-  </div>
-  <div class="subject" onclick="showSubject('كيمياء')">
-    <div class="emoji">🧪</div><h3>كيمياء</h3>
-  </div>
-  <div class="subject" onclick="showSubject('أحياء')">
-    <div class="emoji">🧬</div><h3>أحياء</h3>
-  </div>
-  <div class="subject" onclick="showSubject('رياضيات')">
-    <div class="emoji">📐</div><h3>رياضيات</h3>
-  </div>
-  <div class="subject" onclick="showSubject('إنجليزي')">
-    <div class="emoji">🇬🇧</div><h3>إنجليزي</h3>
-  </div>
-</div>
 
+<div class="subjects">
+
+<div class="subject" onclick="showSubject('فيزياء')"><div class="emoji">⚡</div><h3>فيزياء</h3></div>
+
+<div class="subject" onclick="showSubject('كيمياء')"><div class="emoji">🧪</div><h3>كيمياء</h3></div>
+
+<div class="subject" onclick="showSubject('أحياء')"><div class="emoji">🧬</div><h3>أحياء</h3></div>
+
+<div class="subject" onclick="showSubject('رياضيات')"><div class="emoji">📐</div><h3>رياضيات</h3></div>
+
+<div class="subject" onclick="showSubject('إنجليزي')"><div class="emoji">🇬🇧</div><h3>إنجليزي</h3></div>
+
+</div>
 
 <h2>أحدث التحديثات</h2>
+
 <div id="updates" class="grid"></div>
+
 <section id="subjectPage" class="hidden">
-  <button class="secondary" onclick="home()">العودة للرئيسية</button>
-  <h2 id="subjectTitle"></h2>
-  <div id="subjectUpdates" class="grid"></div>
+
+<button class="secondary" onclick="home()">العودة للرئيسية</button>
+
+<h2 id="subjectTitle"></h2>
+
+<div id="subjectUpdates" class="grid"></div>
+
 </section>
+
 </main>
+
 <main id="loginPage" class="hidden">
+
 <div class="panel" style="max-width:420px;margin:auto">
+
 <h2>دخول المشرفين</h2>
+
 <p>دخول المشرف باستخدام البريد الإلكتروني وكلمة المرور</p>
+
 <input id="email" type="email" placeholder="البريد الإلكتروني للمشرف">
-<input id="password" type="password" placeholder="رمز العرض">
+
+<input id="password" type="password" placeholder="كلمة المرور">
+
 <button onclick="login()">دخول</button>
+
 </div>
+
 </main>
 
 <section id="adminPage" class="admin hidden">
+
 <h2>لوحة التحكم</h2>
-<button class="secondary" onclick="home()">تسجيل الخروج</button>
+
+<button class="secondary" onclick="logout()">تسجيل الخروج</button>
+
 <div class="admin-grid" style="margin-top:20px">
+
 <div class="panel">
+
 <h3>إضافة تحديث</h3>
+
 <input id="title" placeholder="عنوان التحديث">
+
 <select id="category">
+
 <option>فيزياء</option>
+
 <option>كيمياء</option>
+
 <option>أحياء</option>
+
 <option>رياضيات</option>
+
 <option>إنجليزي</option>
+
 <option>عام</option>
+
 </select>
+
 <textarea id="details" placeholder="تفاصيل التحديث"></textarea>
+
 <input id="imageFile" type="file" accept="image/*">
+
 <button onclick="addPost()">نشر التحديث</button>
+
 </div>
+
 <div class="panel">
+
 <h3>إدارة المنشورات</h3>
+
 <div id="manage"></div>
+
 </div>
+
 </div>
+
 </section>
 
 <footer>تحديد للاختبارات © 2026</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://rnyaqlnnrqlktcfmyyyh.supabase.co';
+const SUPABASE_URL = 'https://rnyaqlnnrqlktcfmyyyh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_i60DzS7Lp1OvB9RIWj1C2A_9YCgDM3w';
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-let posts=JSON.parse(localStorage.getItem('posts')||'[]');
 
+const homePage = document.getElementById('homePage');
+const loginPage = document.getElementById('loginPage');
+const adminPage = document.getElementById('adminPage');
+const updates = document.getElementById('updates');
 
-function home(){document.querySelector('.hero').classList.remove('hidden');
+function escapeText(s){
+  return String(s ?? '').replace(/[&<>"']/g,c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c]));
+}
+
+function home(){
   homePage.classList.remove('hidden');
   loginPage.classList.add('hidden');
   adminPage.classList.add('hidden');
 
-  document.getElementById('subjectPage').classList.add('hidden');
+  document.querySelector('.hero').classList.remove('hidden');
   document.querySelector('.subjects').classList.remove('hidden');
   updates.classList.remove('hidden');
+  document.getElementById('subjectPage').classList.add('hidden');
 
   render();
+}
+
+function showLogin(){
+  homePage.classList.add('hidden');
+  adminPage.classList.add('hidden');
+  loginPage.classList.remove('hidden');
 }
 
 async function showSubject(subject){
@@ -172,10 +286,11 @@ async function showSubject(subject){
 
   if(error){
     subjectUpdates.innerHTML = '<p>تعذر تحميل المنشورات</p>';
+    console.error(error);
     return;
   }
 
-  subjectUpdates.innerHTML = data.map(p => `
+  subjectUpdates.innerHTML = (data || []).map(p => `
     <div class="card">
       <h3>${escapeText(p.title)}</h3>
       <p>${escapeText(p.content)}</p>
@@ -185,18 +300,11 @@ async function showSubject(subject){
   `).join('') || '<p>لا توجد منشورات لهذه المادة حالياً</p>';
 }
 
-
-function showLogin(){
-  document.getElementById('homePage').classList.add('hidden');
-  document.getElementById('adminPage').classList.add('hidden');
-  document.getElementById('loginPage').classList.remove('hidden');
-}
-
 async function login(){
   const emailValue = document.getElementById('email').value.trim();
   const passwordValue = document.getElementById('password').value;
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
+  const { error } = await supabaseClient.auth.signInWithPassword({
     email: emailValue,
     password: passwordValue
   });
@@ -204,108 +312,36 @@ async function login(){
   if(error){
     alert('خطأ في تسجيل الدخول: ' + error.message);
     return;
-async function renderManage(){
-  const manage = document.getElementById('manage');
-
-  const { data, error } = await supabaseClient
-    .from('updates')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if(error){
-    manage.innerHTML = '<p>تعذر تحميل المنشورات</p>';
-    console.error(error);
-    return;
   }
 
-  manage.innerHTML = data.map(p => `
-    <div class="card">
-      <h3>${escapeText(p.title)}</h3>
-      <p>${escapeText(p.category)}</p>
-
-      <button onclick="deletePost('${p.id}')">
-        حذف المنشور
-      </button>
-
-      <button class="secondary" onclick="editPost('${p.id}')">
-        تعديل المنشور
-      </button>
-    </div>
-  `).join('') || '<p>لا توجد منشورات</p>';
-}
-async function editPost(id){
-  const { data, error } = await supabaseClient
-    .from('updates')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if(error){
-    alert('تعذر تحميل المنشور');
-    return;
-  }
-
-  const newTitle = prompt('تعديل العنوان:', data.title);
-  if(newTitle === null) return;
-
-  const newContent = prompt('تعديل التفاصيل:', data.content);
-  if(newContent === null) return;
-
-  const { error: updateError } = await supabaseClient
-    .from('updates')
-    .update({
-      title: newTitle.trim(),
-      content: newContent.trim()
-    })
-    .eq('id', id);
-
-  if(updateError){
-    alert('تعذر تعديل المنشور: ' + updateError.message);
-    return;
-  }
+  loginPage.classList.add('hidden');
+  adminPage.classList.remove('hidden');
 
   await render();
   await renderManage();
-
-  alert('تم تعديل المنشور بنجاح');
 }
-  document.getElementById('loginPage').classList.add('hidden');
-  document.getElementById('adminPage').classList.remove('hidden');
 
-  await render();
-await renderManage();
+async function logout(){
+  await supabaseClient.auth.signOut();
+  home();
 }
+
 async function addPost(){
-  if(!title.value.trim() || !details.value.trim()){
-    return alert('أكمل البيانات');
-  }
-  async function deletePost(id){
-  alert('تم الضغط على زر الحذف');
+  const titleValue = document.getElementById('title').value.trim();
+  const detailsValue = document.getElementById('details').value.trim();
+  const categoryValue = document.getElementById('category').value;
 
-  const confirmDelete = confirm('هل أنت متأكد من حذف هذا المنشور؟');
-  if(!confirmDelete) return;
-
-  const { error } = await supabaseClient
-    .from('updates')
-    .delete()
-    .eq('id', id);
-
-  if(error){
-    alert('تعذر حذف المنشور: ' + error.message);
+  if(!titleValue || !detailsValue){
+    alert('أكمل البيانات');
     return;
   }
-
-  await render();
-  await renderManage();
-
-  alert('تم حذف المنشور بنجاح');
-}
 
   let imageUrl = null;
   const file = document.getElementById('imageFile').files[0];
 
   if(file){
-    const fileName = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+    const fileName = Date.now() + '-' +
+      file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
 
     const { error: uploadError } = await supabaseClient.storage
       .from('post-images')
@@ -326,9 +362,9 @@ async function addPost(){
   const { error } = await supabaseClient
     .from('updates')
     .insert({
-      title: title.value.trim(),
-      content: details.value.trim(),
-      category: category.value,
+      title: titleValue,
+      content: detailsValue,
+      category: categoryValue,
       published: true,
       image_url: imageUrl
     });
@@ -338,32 +374,15 @@ async function addPost(){
     return;
   }
 
-  title.value = '';
-  details.value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('details').value = '';
   document.getElementById('imageFile').value = '';
 
   await render();
+  await renderManage();
+
   alert('تم نشر المنشور بنجاح');
 }
-
-async function removePost(id){
-  const { error } = await supabaseClient
-    .from('updates')
-    .delete()
-    .eq('id', id);
-
-  if(error){
-    alert('تعذر حذف التحديث: ' + error.message);
-    return;
-  }
-
-  await render();
-  alert('تم حذف التحديث');
-}
-function save(){
-localStorage.setItem('posts',JSON.stringify(posts));
-}
-
 
 async function render(){
   const { data, error } = await supabaseClient
@@ -378,32 +397,131 @@ async function render(){
     return;
   }
 
-  posts = data.map(p => ({
-    id: p.id,
-    title: p.title,
-    category: p.category,
-    details: p.content,
-    date: new Date(p.created_at).toLocaleDateString('ar-SA'),
-    image_url: p.image_url
-  }));
-
-  updates.innerHTML = posts.map(p => `
+  updates.innerHTML = (data || []).map(p => `
     <div class="card">
       <span class="tag">${escapeText(p.category)}</span>
       <h3>${escapeText(p.title)}</h3>
-      <p>${escapeText(p.details)}</p>
+      <p>${escapeText(p.content)}</p>
       ${p.image_url ? `<img src="${escapeText(p.image_url)}" alt="صورة المنشور" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;margin-top:10px">` : ''}
-      <div class="date">${p.date}</div>
+      <div class="date">${new Date(p.created_at).toLocaleDateString('ar-SA')}</div>
     </div>
   `).join('') || '<p>لا توجد تحديثات حالياً</p>';
 }
+</script>
 
+<script>
+async function renderManage(){
+  const manage = document.getElementById('manage');
 
-function escapeText(s){
-return String(s).replace(/[&<>"']/g,c=>({
-'&':'&amp;','<':'&lt;','>':'&gt;',
-'"':'&quot;',"'":'&#39;'
-}[c]));
+  const { data, error } = await supabaseClient
+    .from('updates')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if(error){
+    manage.innerHTML = '<p>تعذر تحميل المنشورات</p>';
+    console.error(error);
+    return;
+  }
+
+  manage.innerHTML = (data || []).map(p => `
+    <div class="card manage-card">
+      <h3>${escapeText(p.title)}</h3>
+      <p>${escapeText(p.category)}</p>
+      <button class="secondary" onclick="editPost('${p.id}')">
+        تعديل المنشور
+      </button>
+      <button class="danger" onclick="deletePost('${p.id}')">
+        حذف المنشور
+      </button>
+    </div>
+  `).join('') || '<p>لا توجد منشورات</p>';
+}
+
+async function editPost(id){
+  const { data, error } = await supabaseClient
+    .from('updates')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if(error){
+    alert('تعذر تحميل المنشور: ' + error.message);
+    return;
+  }
+
+  const newTitle = prompt('تعديل العنوان:', data.title);
+  if(newTitle === null) return;
+
+  if(!newTitle.trim()){
+    alert('العنوان لا يمكن أن يكون فارغاً');
+    return;
+  }
+
+  const newContent = prompt('تعديل التفاصيل:', data.content);
+  if(newContent === null) return;
+
+  if(!newContent.trim()){
+    alert('التفاصيل لا يمكن أن تكون فارغة');
+    return;
+  }
+
+  const newCategory = prompt(
+    'اكتب المادة: فيزياء، كيمياء، أحياء، رياضيات، إنجليزي، عام',
+    data.category
+  );
+
+  if(newCategory === null) return;
+
+  const allowedCategories = [
+    'فيزياء','كيمياء','أحياء','رياضيات','إنجليزي','عام'
+  ];
+
+  if(!allowedCategories.includes(newCategory.trim())){
+    alert('المادة غير صحيحة');
+    return;
+  }
+
+  const { error: updateError } = await supabaseClient
+    .from('updates')
+    .update({
+      title: newTitle.trim(),
+      content: newContent.trim(),
+      category: newCategory.trim()
+    })
+    .eq('id', id);
+
+  if(updateError){
+    alert('تعذر تعديل المنشور: ' + updateError.message);
+    return;
+  }
+
+  await render();
+  await renderManage();
+
+  alert('تم تعديل المنشور بنجاح');
+}
+
+async function deletePost(id){
+  if(!confirm('هل أنت متأكد من حذف هذا المنشور؟')){
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('updates')
+    .delete()
+    .eq('id', id);
+
+  if(error){
+    alert('تعذر حذف المنشور: ' + error.message);
+    console.error(error);
+    return;
+  }
+
+  await render();
+  await renderManage();
+
+  alert('تم حذف المنشور بنجاح');
 }
 
 render();
