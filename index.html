@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>تحديد للاختبارات</title>
-<style>
+
 *{box-sizing:border-box}
 body{margin:0;font-family:Tahoma,Arial;background:#f4f6fa;color:#17233b}
 header{background:#101c35;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -17,6 +17,11 @@ main{max-width:1100px;margin:35px auto;padding:15px}
 .hero p{line-height:2;color:#ddd}
 h2{margin-top:35px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.subjects{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
+.subject{background:white;border:1px solid #e4e8ef;border-radius:16px;padding:25px 10px;text-align:center;box-shadow:0 4px 14px #17233b0b;transition:.2s}
+.subject:hover{transform:translateY(-5px);border-color:#d5ae62}
+.subject .emoji{font-size:32px;margin-bottom:12px}
+.subject h3{margin:0;color:#17233b;font-size:17px}
 .card,.panel{background:white;padding:22px;border-radius:15px;border:1px solid #e4e8ef}
 .card h3{color:#17233b}
 .card p{line-height:2;color:#65718a}
@@ -29,8 +34,13 @@ textarea{height:110px}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .post{padding:15px;border-bottom:1px solid #ddd}
 footer{text-align:center;padding:30px;color:#777}
-@media(max-width:700px){.grid,.admin-grid{grid-template-columns:1fr}.hero h1{font-size:27px}header{align-items:center}}
-</style>
+@media(max-width:700px){
+.grid,.admin-grid{grid-template-columns:1fr}
+.subjects{grid-template-columns:repeat(2,1fr)}
+.hero h1{font-size:27px}
+header{align-items:center}
+}
+
 </head>
 <body>
 
@@ -49,9 +59,16 @@ footer{text-align:center;padding:30px;color:#777}
 <button onclick="document.getElementById('updates').scrollIntoView({behavior:'smooth'})">اكتشف التحديثات</button>
 </section>
 
+<h2>المواد الدراسية</h2>
+<div class="subjects">
+  <div class="subject"><div class="emoji">⚡</div><h3>فيزياء</h3></div>
+  <div class="subject"><div class="emoji">🧪</div><h3>كيمياء</h3></div>
+  <div class="subject"><div class="emoji">🧬</div><h3>أحياء</h3></div>
+  <div class="subject"><div class="emoji">📐</div><h3>رياضيات</h3></div>
+  <div class="subject"><div class="emoji">🇬🇧</div><h3>إنجليزي</h3></div>
+</div>
+
 <h2>أحدث التحديثات</h2>
-<div id="updates" class="grid"></div>
-</main>
 
 <main id="loginPage" class="hidden">
 <div class="panel" style="max-width:420px;margin:auto">
