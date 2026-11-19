@@ -278,9 +278,11 @@ await renderManage();
 async function addPost(){
   if(!title.value.trim() || !details.value.trim()){
     return alert('أكمل البيانات');
-  }async function deletePost(id){
-  const confirmDelete = confirm('هل أنت متأكد من حذف هذا المنشور؟');
+  }
+  async function deletePost(id){
+  alert('تم الضغط على زر الحذف');
 
+  const confirmDelete = confirm('هل أنت متأكد من حذف هذا المنشور؟');
   if(!confirmDelete) return;
 
   const { error } = await supabaseClient
