@@ -233,7 +233,42 @@ async function renderManage(){
     </div>
   `).join('') || '<p>لا توجد منشورات</p>';
 }
+async function editPost(id){
+  const { data, error } = await supabaseClient
+    .from('updates')
+    .select('*')
+    .eq('id', id)
+    .single();
 
+  if(error){
+    alert('تعذر تحميل المنشور');
+    return;
+  }
+
+  const newTitle = prompt('تعديل العنوان:', data.title);
+  if(newTitle === null) return;
+
+  const newContent = prompt('تعديل التفاصيل:', data.content);
+  if(newContent === null) return;
+
+  const { error: updateError } = await supabaseClient
+    .from('updates')
+    .update({
+      title: newTitle.trim(),
+      content: newContent.trim()
+    })
+    .eq('id', id);
+
+  if(updateError){
+    alert('تعذر تعديل المنشور: ' + updateError.message);
+    return;
+  }
+
+  await render();
+  await renderManage();
+
+  alert('تم تعديل المنشور بنجاح');
+}
   document.getElementById('loginPage').classList.add('hidden');
   document.getElementById('adminPage').classList.remove('hidden');
 
