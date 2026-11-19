@@ -140,7 +140,7 @@ const supabaseClient = window.supabase.createClient(
 let posts=JSON.parse(localStorage.getItem('posts')||'[]');
 
 
-function home(){
+function home(document.querySelector('.hero').classList.remove('hidden');){
   homePage.classList.remove('hidden');
   loginPage.classList.add('hidden');
   adminPage.classList.add('hidden');
@@ -153,6 +153,7 @@ function home(){
 }
 
 async function showSubject(subject){
+  document.querySelector('.hero').classList.add('hidden');
   document.querySelector('.subjects').classList.add('hidden');
   updates.classList.add('hidden');
 
