@@ -44,7 +44,15 @@ h2{margin-top:35px}
 
 .subject{background:white;border:1px solid #e4e8ef;border-radius:16px;padding:25px 10px;text-align:center;cursor:pointer;transition:.2s}
 
-.subject:hover{transform:translateY(-5px);border-color:#d5ae62}
+..subject{
+  transition:all .3s ease;
+}
+
+.subject:hover{
+  transform:translateY(-8px) scale(1.02);
+  border-color:#f0c875;
+  box-shadow:0 15px 30px #14244225;
+}
 
 .subject .emoji{font-size:32px;margin-bottom:12px}
 
