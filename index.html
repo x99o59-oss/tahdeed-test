@@ -1012,6 +1012,24 @@ function changeSlide(postIndex, direction){
 
   counter.textContent = `${currentIndex + 1} / ${images.length}`;
 }
+let touchStartX = 0;
+
+function startSwipe(event){
+  touchStartX = event.changedTouches[0].screenX;
+}
+
+function endSwipe(event, postIndex){
+  const touchEndX = event.changedTouches[0].screenX;
+  const difference = touchStartX - touchEndX;
+
+  if(Math.abs(difference) < 50) return;
+
+  if(difference > 0){
+    changeSlide(postIndex, 1);
+  } else {
+    changeSlide(postIndex, -1);
+  }
+}
 function openImage(url){
   let viewer = document.getElementById('imageViewer');
 
