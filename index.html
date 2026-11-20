@@ -364,6 +364,79 @@ footer{
 .subject:nth-child(2){grid-column:2}
 .subject:nth-child(3){grid-column:1}
 .subject:nth-child(4){grid-column:2}
+/* تحسين لوحة المشرفين */
+.admin-grid .panel{
+  background:#fff;
+  border:1px solid #e5e9f1;
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 8px 25px #1424420c;
+  margin-bottom:25px;
+}
+
+.admin-grid .panel h3{
+  color:#142442;
+  font-size:25px;
+  margin-bottom:25px;
+}
+
+.admin-grid .panel input:not([type="file"]),
+.admin-grid .panel select,
+.admin-grid .panel textarea{
+  width:100%;
+  padding:16px;
+  margin:10px 0;
+  border:1px solid #dce2ec;
+  border-radius:14px;
+  background:#f9fafd;
+  font-family:Tahoma,Arial;
+  font-size:16px;
+  outline:none;
+  transition:.2s;
+}
+
+.admin-grid .panel input:focus,
+.admin-grid .panel select:focus,
+.admin-grid .panel textarea:focus{
+  border-color:#d5ae62;
+  background:white;
+  box-shadow:0 0 0 3px #d5ae6220;
+}
+
+.admin-grid .panel textarea{
+  min-height:150px;
+  resize:vertical;
+}
+
+.admin-grid .panel input[type="file"]{
+  width:100%;
+  margin:15px 0;
+  padding:15px;
+  background:#f5f7fb;
+  border:1px dashed #cbd3e1;
+  border-radius:14px;
+}
+
+#publishBtn{
+  background:#d5ae62;
+  color:#142442;
+  border:0;
+  border-radius:14px;
+  padding:15px 30px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+
+#publishBtn:hover{
+  background:#c69b45;
+  transform:translateY(-2px);
+}
+
+#uploadBar{
+  accent-color:#d5ae62;
+}
 </style>
 
 </head>
