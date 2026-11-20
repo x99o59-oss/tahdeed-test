@@ -464,6 +464,30 @@ body.dark-mode select {
   color: white;
   border-color: #475569;
 }
+#darkModeBtn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  padding:0;
+  font-size:20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:8px;
+}
+#darkModeBtn{
+  position:fixed;
+  top:15px;
+  left:15px;
+  z-index:9999;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  padding:0;
+  margin:0;
+  font-size:21px;
+  box-shadow:0 3px 12px #0002;
+}
 </style>
 
 </head>
@@ -478,7 +502,7 @@ body.dark-mode select {
 
 <button class="secondary" onclick="home()">الرئيسية</button>
 
-<button class="secondary" onclick="toggleDarkMode()" id="darkModeBtn">🌙 الوضع الليلي</button>
+<button class="secondary" onclick="toggleDarkMode()" id="darkModeBtn">🌙</button>
 
 <button onclick="showLogin()">دخول المشرفين</button>
 
@@ -1184,13 +1208,13 @@ function toggleDarkMode(){
   localStorage.setItem('darkMode', isDark);
 
   document.getElementById('darkModeBtn').textContent =
-    isDark ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
+    isDark ? '☀️' : '🌙';
 }
 
 // استعادة الوضع المحفوظ
 if(localStorage.getItem('darkMode') === 'true'){
   document.body.classList.add('dark-mode');
-  document.getElementById('darkModeBtn').textContent = '☀️ الوضع النهاري';
+  document.getElementById('darkModeBtn').textContent = '☀️';
 }
 </script>
 </body>
