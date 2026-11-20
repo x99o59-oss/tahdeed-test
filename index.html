@@ -1175,6 +1175,23 @@ async function deletePost(id){
 }
 
 render();
+function toggleDarkMode(){
+
+  document.body.classList.toggle('dark-mode');
+
+  const isDark = document.body.classList.contains('dark-mode');
+
+  localStorage.setItem('darkMode', isDark);
+
+  document.getElementById('darkModeBtn').textContent =
+    isDark ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
+}
+
+// استعادة الوضع المحفوظ
+if(localStorage.getItem('darkMode') === 'true'){
+  document.body.classList.add('dark-mode');
+  document.getElementById('darkModeBtn').textContent = '☀️ الوضع النهاري';
+}
 </script>
 </body>
 </html>
