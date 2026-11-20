@@ -987,7 +987,24 @@ async function render(){
   }).join('') || '<p>لا توجد تحديثات حالياً</p>';
 }
 
+function changeSlide(postIndex, direction){
+  const images = window.postGalleries?.[postIndex];
+  if(!images || !images.length) return;
 
+  const image = document.getElementById(`slideImage${postIndex}`);
+  const counter = document.getElementById(`slideCount${postIndex}`);
+
+  if(!image || !counter) return;
+
+  let currentIndex = Number(image.dataset.index || 0);
+
+  currentIndex = (currentIndex + direction + images.length) % images.length;
+
+  image.dataset.index = currentIndex;
+  image.src = images[currentIndex];
+
+  counter.textContent = `${currentIndex + 1} / ${images.length}`;
+}
 function openImage(url){
   let viewer = document.getElementById('imageViewer');
 
