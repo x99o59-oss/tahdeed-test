@@ -984,14 +984,30 @@ async function renderManage(){
 
   manage.innerHTML = (data || []).map(p => `
     <div class="card manage-card">
-      <h3>${escapeText(p.title)}</h3>
-      <p>${escapeText(p.category)}</p>
-      <button class="secondary" onclick="editPost('${p.id}')">
-        تعديل المنشور
-      </button>
-      <button class="danger" onclick="deletePost('${p.id}')">
-        حذف المنشور
-      </button>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <span class="tag">${escapeText(p.category)}</span>
+        <span style="font-size:13px;color:#888">
+          ${new Date(p.created_at).toLocaleDateString('ar-SA')}
+        </span>
+      </div>
+
+      <h3 style="margin:15px 0 8px">
+        ${escapeText(p.title)}
+      </h3>
+
+      <p style="color:#777">
+        ${escapeText(p.content)}
+      </p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <button class="secondary" onclick="editPost('${p.id}')">
+          ✏️ تعديل المنشور
+        </button>
+
+        <button class="danger" onclick="deletePost('${p.id}')">
+          🗑️ حذف المنشور
+        </button>
+      </div>
     </div>
   `).join('') || '<p>لا توجد منشورات</p>';
 }
