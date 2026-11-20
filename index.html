@@ -1016,14 +1016,21 @@ async function renderManage(){
           </div>
         ` : '<p style="color:#999;font-size:13px">لا توجد صور مرفقة</p>'}
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-          <button class="secondary" onclick="editPost('${p.id}')">
-            ✏️ تعديل المنشور
-          </button>
-          <button class="danger" onclick="deletePost('${p.id}')">
-            🗑️ حذف المنشور
-          </button>
-        </div>
+       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+
+  <button class="secondary" onclick="editPost('${p.id}')">
+    ✏️ تعديل المنشور
+  </button>
+
+  <button onclick="togglePost('${p.id}', ${p.published})">
+    ${p.published ? '🙈 إخفاء المنشور' : '👁️ إظهار المنشور'}
+  </button>
+
+  <button class="danger" onclick="deletePost('${p.id}')">
+    🗑️ حذف المنشور
+  </button>
+
+</div>
       </div>
     `;
   }).join('') || '<p>لا توجد منشورات</p>';
@@ -1092,7 +1099,29 @@ async function editPost(id){
 
   alert('تم تعديل المنشور بنجاح');
 }
+async function togglePost(id, currentStatus){
 
+  const action = currentStatus ? 'إخفاء' : 'إظهار';
+
+  if(!confirm(`هل تريد ${action} هذا المنشور؟`)){
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('updates')
+    .update({ published: !currentStatus })
+    .eq('id', id);
+
+  if(error){
+    alert('تعذر تحديث المنشور: ' + error.message);
+    return;
+  }
+
+  await render();
+  await renderManage();
+
+  alert(`تم ${action} المنشور بنجاح`);
+}
 async function deletePost(id){
   if(!confirm('هل أنت متأكد من حذف هذا المنشور؟')){
     return;
