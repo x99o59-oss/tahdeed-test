@@ -1027,14 +1027,14 @@ function changeSlide(postIndex, direction){
 let touchStartX = 0;
 
 function startSwipe(event){
-  touchStartX = event.changedTouches[0].screenX;
+  touchStartX = event.touches[0].clientX;
 }
 
 function endSwipe(event, postIndex){
-  const touchEndX = event.changedTouches[0].screenX;
+  const touchEndX = event.changedTouches[0].clientX;
   const difference = touchStartX - touchEndX;
 
-  if(Math.abs(difference) < 50) return;
+  if(Math.abs(difference) < 40) return;
 
   if(difference > 0){
     changeSlide(postIndex, 1);
