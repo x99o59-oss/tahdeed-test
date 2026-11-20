@@ -75,7 +75,16 @@ textarea{height:110px}
 .manage-card button{width:100%;margin-top:7px}
 
 footer{text-align:center;padding:30px;color:#777}
+.subject:nth-child(5){
+  grid-column:1 / -1;
+  width:65%;
+  justify-self:center;
+}
 
+.subject:nth-child(1){grid-column:1}
+.subject:nth-child(2){grid-column:2}
+.subject:nth-child(3){grid-column:1}
+.subject:nth-child(4){grid-column:2}
 @media(max-width:700px){
 
 .grid,.admin-grid{grid-template-columns:1fr}
