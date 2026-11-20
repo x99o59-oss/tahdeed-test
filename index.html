@@ -918,6 +918,7 @@ if(files.length){
 
 
 
+
 async function render(){
   const { data, error } = await supabaseClient
     .from('updates')
@@ -931,7 +932,9 @@ async function render(){
     return;
   }
 
-  updates.innerHTML = (data || []).map(p => {
+  window.postGalleries = {};
+
+  updates.innerHTML = (data || []).map((p, i) => {
     let images = [];
 
     if(p.image_url){
@@ -943,6 +946,8 @@ async function render(){
       }
     }
 
+    window.postGalleries[i] = images;
+
     return `
       <div class="card">
         <span class="tag">${escapeText(p.category)}</span>
@@ -950,15 +955,27 @@ async function render(){
         <p>${escapeText(p.content)}</p>
 
         ${images.length ? `
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:12px">
-            ${images.map(url => `
-              <img
-                src="${escapeText(url)}"
-                alt="صورة المنشور"
-                onclick="openImage(this.src)"
-                style="width:100%;height:120px;object-fit:cover;border-radius:10px;cursor:pointer"
-              >
-            `).join('')}
+          <div style="margin-top:15px;text-align:center">
+
+            <img
+              id="slideImage${i}"
+              src="${escapeText(images[0])}"
+              onclick="openImage(this.src)"
+              style="width:100%;max-height:300px;object-fit:contain;border-radius:12px;cursor:pointer;background:#f1f1f1"
+            >
+
+            ${images.length > 1 ? `
+              <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:12px">
+
+                <button onclick="changeSlide(${i},-1)">❮</button>
+
+                <span id="slideCount${i}">1 / ${images.length}</span>
+
+                <button onclick="changeSlide(${i},1)">❯</button>
+
+              </div>
+            ` : ''}
+
           </div>
         ` : ''}
 
@@ -969,6 +986,7 @@ async function render(){
     `;
   }).join('') || '<p>لا توجد تحديثات حالياً</p>';
 }
+
 
 function openImage(url){
   let viewer = document.getElementById('imageViewer');
