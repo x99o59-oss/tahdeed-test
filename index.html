@@ -772,7 +772,7 @@ async function showSubject(subject){
               id="subjectSlideImage${i}"
               data-index="0"
               src="${escapeText(images[0])}"
-              onclick="openImage(this.src)"
+              onclick="handleGalleryImageClick(event,this.src)"
               ontouchstart="startSwipe(event)"
               ontouchend="endSubjectSwipe(event, ${i})"
               style="width:100%;max-height:300px;object-fit:contain;border-radius:12px;cursor:pointer;background:#f1f1f1;touch-action:pan-y;user-select:none;-webkit-user-drag:none"          >
@@ -988,7 +988,7 @@ async function render(){
   id="slideImage${i}"
   data-index="0"
   src="${escapeText(images[0])}"
-  onclick="openImage(this.src)"
+  onclick="handleGalleryImageClick(event,this.src)"
   ontouchstart="startSwipe(event)"
   ontouchend="endSwipe(event, ${i})"
   style="width:100%;max-height:300px;object-fit:contain;border-radius:12px;cursor:pointer;background:#f1f1f1;touch-action:pan-y;user-select:none;-webkit-user-drag:none"
@@ -1048,7 +1048,7 @@ function endSwipe(event, postIndex){
   const difference = touchStartX - touchEndX;
 
   if(Math.abs(difference) < 40) return;
-
+lastSwipeTime = Date.now();
   if(difference > 0){
     changeSlide(postIndex, 1);
   } else {
@@ -1062,6 +1062,7 @@ function endSubjectSwipe(event, postIndex){
 
   if(Math.abs(difference) < 40) return;
 
+lastSwipeTime = Date.now();
   if(difference > 0){
     changeSubjectSlide(postIndex, 1);
   } else {
@@ -1087,17 +1088,15 @@ function changeSubjectSlide(postIndex, direction){
   counter.textContent = `${currentIndex + 1} / ${images.length}`;
 }
 
-function endSubjectSwipe(event, postIndex){
-  const touchEndX = event.changedTouches[0].screenX;
-  const difference = touchStartX - touchEndX;
+let lastSwipeTime = 0;
 
-  if(Math.abs(difference) < 50) return;
-
-  if(difference > 0){
-    changeSubjectSlide(postIndex, 1);
-  } else {
-    changeSubjectSlide(postIndex, -1);
+function handleGalleryImageClick(event, url){
+  if(Date.now() - lastSwipeTime < 500){
+    event.preventDefault();
+    return;
   }
+
+  openImage(url);
 }
 function openImage(url){
   let viewer = document.getElementById('imageViewer');
@@ -1196,7 +1195,7 @@ async function renderManage(){
             ${images.map(url => `
               <img src="${escapeText(url)}"
                 alt="صورة المنشور"
-                onclick="openImage(this.src)"
+                onclick="handleGalleryImageClick(event,this.src)"
                 style="width:100%;height:90px;object-fit:cover;border-radius:12px;cursor:pointer">
             `).join('')}
           </div>
