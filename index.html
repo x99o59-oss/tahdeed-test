@@ -1040,6 +1040,7 @@ function changeSlide(postIndex, direction){
 let touchStartX = 0;
 
 function startSwipe(event){
+  if(event.touches.length !== 1) return;
   touchStartX = event.touches[0].clientX;
 }
 
@@ -1053,6 +1054,19 @@ function endSwipe(event, postIndex){
     changeSlide(postIndex, 1);
   } else {
     changeSlide(postIndex, -1);
+  }
+}
+
+function endSubjectSwipe(event, postIndex){
+  const touchEndX = event.changedTouches[0].clientX;
+  const difference = touchStartX - touchEndX;
+
+  if(Math.abs(difference) < 40) return;
+
+  if(difference > 0){
+    changeSubjectSlide(postIndex, 1);
+  } else {
+    changeSubjectSlide(postIndex, -1);
   }
 }
 function changeSubjectSlide(postIndex, direction){
