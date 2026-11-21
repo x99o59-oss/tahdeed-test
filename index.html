@@ -609,7 +609,7 @@ body.dark-mode select {
 
 <textarea id="details" placeholder="تفاصيل التحديث"></textarea>
 
-<input type="file" id="imageFile" accept="image/*" multiple>
+<input type="file" id="imageFile" accept="image/*" multiple onchange="checkImageLimit(this)">
 
 <button id="publishBtn" onclick="addPost()">نشر التحديث</button>
 <div id="uploadStatus" style="display:none;margin-top:12px">
@@ -825,7 +825,16 @@ async function logout(){
   home();
 }
 
+function checkImageLimit(input){
+  if(input.files.length > 100){
+    alert('الحد الأقصى هو 100 صورة للمنشور الواحد');
+    input.value = '';
+    return;
+  }
 
+  document.getElementById('uploadText').textContent =
+    'تم اختيار ' + input.files.length + ' صورة';
+}
 async function addPost(){
   const publishBtn = document.getElementById('publishBtn');
 
@@ -839,9 +848,13 @@ async function addPost(){
   const detailsValue = document.getElementById('details').value.trim();
   const categoryValue = document.getElementById('category').value;
   const files = Array.from(
-    document.getElementById('imageFile').files
-  );
+  document.getElementById('imageFile').files
+);
 
+if(files.length > 100){
+  alert('لا يمكن رفع أكثر من 100 صورة في المنشور الواحد');
+  return;
+}
   if(!titleValue || !detailsValue){
     alert('أكمل البيانات');
     return;
