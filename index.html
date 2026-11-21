@@ -775,8 +775,7 @@ async function showSubject(subject){
               onclick="openImage(this.src)"
               ontouchstart="startSwipe(event)"
               ontouchend="endSubjectSwipe(event, ${i})"
-              style="width:100%;max-height:300px;object-fit:contain;border-radius:12px;cursor:pointer;background:#f1f1f1;touch-action:pan-x"
-            >
+              style="width:100%;max-height:300px;object-fit:contain;border-radius:12px;cursor:pointer;background:#f1f1f1;touch-action:pan-y;user-select:none;-webkit-user-drag:none"          >
 
             ${images.length > 1 ? `
               <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:12px">
